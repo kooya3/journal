@@ -113,14 +113,8 @@ export default function Component() {
                   </Avatar>
                   My Journal
                 </Button></Link>
-                <Button variant="ghost" className="w-full text-left hover:bg-gray-700 transition-colors">
-                  <Avatar className="inline-block w-6 h-6 mr-2">
-                    <AvatarImage src="/placeholder-user.jpg" />
-                    <AvatarFallback>RL</AvatarFallback>
-                  </Avatar>
-                  Running Log
-                </Button>
-                <Link href="#" className="block" prefetch={false}>
+                
+                <Link href="/Journal" className="block" prefetch={false}>
                   <Button variant="outline" className="w-full hover:bg-gray-700 transition-colors">
                     Add Journal
                   </Button>
