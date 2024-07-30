@@ -1,4 +1,5 @@
-
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unescaped-entities */
 "use client"
 
 import { useState } from "react"
@@ -107,19 +108,19 @@ export default function Component() {
             <h2 className="text-4xl font-bold text-white mb-8">About Us</h2>
             <div className="grid grid-cols-2 gap-8">
               <div>
-                <img src="/placeholder.svg" width={500} height={300} alt="About Us" className="rounded-lg" />
+                <img src="/placeholder.svg" width={500} height={300} alt="About Us" className="rounded-lg" />{/* eslint-disable-line @next/next/no-img-element */}
               </div>
               <div className="flex flex-col justify-center">
                 <p className="text-gray-400 mb-4">
                   We are a team of passionate individuals dedicated to creating innovative solutions that empower our
                   clients to achieve their goals. With years of experience in the industry, we have developed a deep
                   understanding of the challenges our clients face and have tailored our services to meet their unique
-                  needs.
+                  needs. {/* eslint-disable-line react/no-unescaped-entities */}
                 </p>
                 <p className="text-gray-400 mb-4">
                   Our mission is to provide our clients with the tools and resources they need to succeed in today's
                   fast-paced digital landscape. We believe in the power of collaboration and strive to build
-                  long-lasting partnerships with our clients, working closely with them to ensure their success.
+                  long-lasting partnerships with our clients, working closely with them to ensure their success.  {/* eslint-disable-line react/no-unescaped-entities */}
                 </p>
                 <div className="flex justify-end">
                   <Button className="bg-primary-500 hover:bg-primary-600 transition-colors">Learn More</Button>

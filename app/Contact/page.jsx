@@ -186,7 +186,7 @@ export default function Component() {
               </div>
               <div className="flex flex-col justify-center">
                 <p className="text-gray-400 mb-4">
-                  Get in touch with us for any inquiries or feedback. We'd love to hear from you!
+                  Get in touch with us for any inquiries or feedback. We'd love to hear from you!   {/* eslint-disable-line react/no-unescaped-entities */}
                 </p>
                 <div className="flex justify-end">
                   <Button variant="outline" className="text-gray-400 hover:text-orange-500 transition-colors">
