@@ -79,13 +79,13 @@ export default function Component() {
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Journals</h2>
               <div className="space-y-1">
-                <Button variant="ghost" className="w-full text-left">
+              <Link href="/Diary" className="block" prefetch={false}><Button variant="ghost" className="w-full text-left">
                   <Avatar className="inline-block w-6 h-6 mr-2">
                     <AvatarImage src="/placeholder-user.jpg" />
                     <AvatarFallback>MJ</AvatarFallback>
                   </Avatar>
                   My Journal
-                </Button>
+                </Button></Link>
                 <Button variant="ghost" className="w-full text-left">
                   <Avatar className="inline-block w-6 h-6 mr-2">
                     <AvatarImage src="/placeholder-user.jpg" />

@@ -1,38 +1,67 @@
-
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from 'react-toastify';
-import { AppWindowIcon, CalendarIcon, LibraryIcon, NewspaperIcon, PlusIcon, TimerIcon, XIcon } from '../constants';
+import { AppWindowIcon, CalendarIcon, LibraryIcon, NewspaperIcon, PlusIcon, TimerIcon } from '../constants';
 
 export default function Component() {
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [journalEntries, setJournalEntries] = useState([]) // State to hold journal entries
+  const [journalEntry, setJournalEntry] = useState("")
+  const [editMode, setEditMode] = useState(false)
+  const [editingEntry, setEditingEntry] = useState(null)
+
+  useEffect(() => {
+    // Retrieve saved journal entries from local storage when the component mounts
+    const savedEntries = JSON.parse(localStorage.getItem("journalEntries") || "[]")
+    setJournalEntries(savedEntries)
+  }, [])
+
   const handleRefresh = () => {
     setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
     }, 2000)
   }
-  const handleEdit = () => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
+
+  const handleSubmit = () => {
+    handleRefresh()
+    if (editMode) {
+      const updatedEntries = journalEntries.map(entry => 
+        entry.id === editingEntry.id ? { ...entry, text: journalEntry } : entry
+      )
+      setJournalEntries(updatedEntries)
+      localStorage.setItem("journalEntries", JSON.stringify(updatedEntries))
+      toast.success("Journal entry updated!")
+    } else {
+      const newEntry = { id: Date.now(), text: journalEntry }
+      const updatedEntries = [...journalEntries, newEntry]
+      setJournalEntries(updatedEntries)
+      localStorage.setItem("journalEntries", JSON.stringify(updatedEntries))
+      toast.success("Journal entry saved!")
+    }
+    setJournalEntry("")
+    setEditMode(false)
+    setEditingEntry(null)
   }
-  const handleShare = () => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
+
+  const handleEdit = (entry) => {
+    setEditMode(true)
+    setJournalEntry(entry.text)
+    setEditingEntry(entry)
   }
-  const handleDateSelect = (date) => {
-    setSelectedDate(date)
+
+  const handleDelete = (id) => {
+    const updatedEntries = journalEntries.filter(entry => entry.id !== id)
+    setJournalEntries(updatedEntries)
+    localStorage.setItem("journalEntries", JSON.stringify(updatedEntries))
+    toast.success("Journal entry deleted!")
   }
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-gray-300">
       <header className="flex items-center justify-between h-16 px-4 bg-gray-800 shadow-md">
@@ -60,42 +89,41 @@ export default function Component() {
               <p className="text-gray-400">What is a meaningful conversation that you have had recently?</p>
             </div>
             <div className="space-y-4">
-            <Link href="/Journal" className="block" prefetch={false}>
+              <Link href="/Journal" className="block" prefetch={false}>
                 <Button variant="outline" className="w-full">
                   <NewspaperIcon className="w-5 h-5 mr-2" />
                   Journal
                 </Button>
               </Link>
               <Link href="/Timeline" className="block" prefetch={false}>
-              <Button variant="outline" className="w-full">
-                <TimerIcon className="w-5 h-5 mr-2" />
-                Timeline
-              </Button>
+                <Button variant="outline" className="w-full">
+                  <TimerIcon className="w-5 h-5 mr-2" />
+                  Timeline
+                </Button>
               </Link>
               <Link href="/Calendar" className="block" prefetch={false}>
-              <Button variant="outline" className="w-full">
-                <CalendarIcon className="w-5 h-5 mr-2" />
-                Calendar
-              </Button>
+                <Button variant="outline" className="w-full">
+                  <CalendarIcon className="w-5 h-5 mr-2" />
+                  Calendar
+                </Button>
               </Link>
-
               <Link href="/Librari" className="block" prefetch={false}>
-              <Button variant="outline" className="w-full">
-                <LibraryIcon className="w-5 h-5 mr-2" />
-                Library
-              </Button>
+                <Button variant="outline" className="w-full">
+                  <LibraryIcon className="w-5 h-5 mr-2" />
+                  Library
+                </Button>
               </Link>
             </div>
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Journals</h2>
               <div className="space-y-1">
-                <Button variant="ghost" className="w-full text-left">
+              <Link href="/Diary" className="block" prefetch={false}><Button variant="ghost" className="w-full text-left">
                   <Avatar className="inline-block w-6 h-6 mr-2">
                     <AvatarImage src="/placeholder-user.jpg" />
                     <AvatarFallback>MJ</AvatarFallback>
                   </Avatar>
                   My Journal
-                </Button>
+                </Button></Link>
                 <Button variant="ghost" className="w-full text-left">
                   <Avatar className="inline-block w-6 h-6 mr-2">
                     <AvatarImage src="/placeholder-user.jpg" />
@@ -115,20 +143,30 @@ export default function Component() {
         <main className="flex-1 flex items-center justify-center bg-gray-800 rounded-lg shadow-md p-8">
           <div className="flex flex-col items-center justify-center w-full">
             <PlusIcon className="w-24 h-24 text-gray-400" />
-            <h3 className="text-3xl font-bold text-white mt-6">Add Entry</h3>
+            <h3 className="text-3xl font-bold text-white mt-6">{editMode ? "Edit Entry" : "Add Entry"}</h3>
             <Textarea
               className="w-full h-80 bg-gray-700 rounded-lg p-6 mt-6 text-white focus:outline-none"
               placeholder="Start writing your journal entry..."
+              value={journalEntry}
+              onChange={(e) => setJournalEntry(e.target.value)}
             />
             <Button
-              onClick={() => {
-                handleRefresh()
-                toast.success("Journal entry saved!")
-              }}
+              onClick={handleSubmit}
               className="mt-6"
             >
-              Submit
+              {editMode ? "Save" : "Submit"}
             </Button>
+            <div className="mt-8 w-full">
+              {journalEntries.map(entry => (
+                <div key={entry.id} className="p-4 mb-4 bg-gray-700 rounded-lg flex justify-between items-center">
+                  <p className="text-white">{entry.text}</p>
+                  <div className="space-x-2 flex  gap-1 items-center">
+                    <Button variant="outline" onClick={() => handleEdit(entry)}>Edit</Button>
+                    <Button variant="outline" onClick={() => handleDelete(entry.id)}>Delete</Button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </main>
       </div>
