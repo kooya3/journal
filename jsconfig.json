@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/layout.jsx",
+    "app/page.jsx",
+    "components/ui/card.jsx",
+    "components/ui/button.tsx",
+    "components/ui/avatar.jsx",
+    "tailwind.config.js",
+    "components/textarea.tsx",
+    "components/calendar.tsx",
+    "components/ui/textarea.tsx",
+    "components/ui/calendar.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

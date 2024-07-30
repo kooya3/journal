@@ -1,12 +1,35 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
-import { Button } from "../components/ui/buttons"
-import { Avatar, AvatarImage, AvatarFallback } from "../components/ui/avatar"
-import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card"
-import { AppWindowIcon, FilePenIcon, ShareIcon, CalendarIcon, BookIcon, NotebookIcon, LibraryIcon, FlameIcon, RefreshCwIcon, NewspaperIcon, PlusIcon, TimerIcon, XIcon } from './constants';
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { AppWindowIcon, BookIcon, CalendarIcon, FilmIcon, Music2Icon, LibraryIcon, NewspaperIcon, PlusIcon, TimerIcon, XIcon } from '../constants';
 
 export default function Component() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null)
+  const handleRefresh = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }
+  const handleEdit = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }
+  const handleShare = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }
+  const handleDateSelect = (date) => {
+    setSelectedDate(date)
+  }
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-gray-300">
       <header className="flex items-center justify-between h-16 px-4 bg-gray-800 shadow-md">
@@ -33,7 +56,7 @@ export default function Component() {
               <h2 className="text-lg font-semibold">Welcome</h2>
               <p className="text-gray-400">What is a meaningful conversation that you have had recently?</p>
             </div>
-            <div className="space-y-4 gap-3">
+            <div className="space-y-4">
             <Link href="/Journal" className="block" prefetch={false}>
                 <Button variant="outline" className="w-full">
                   <NewspaperIcon className="w-5 h-5 mr-2" />
@@ -59,7 +82,6 @@ export default function Component() {
                 Library
               </Button>
               </Link>
-            
             </div>
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Journals</h2>
@@ -86,73 +108,66 @@ export default function Component() {
             </div>
           </div>
         </aside>
-        <main className="flex-1 p-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="col-span-2 bg-gray-800 shadow-md">
-              <CardHeader>
-                <CardTitle className="text-3xl font-bold text-white shadow-lg">Journal Overview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between bg-slate-500 text-white p-4 rounded-md ">
-                  <div className="text-2xl font-bold">
-                    <FlameIcon className="w-8 h-8 animate-bounce" />
-                    2
-                  </div>
-                  <div className="text-2xl font-bold">
-                    <NotebookIcon className="w-8 h-8 animate-bounce" />
-                    15
-                  </div>
-                  <div className="text-2xl font-bold">
-                    <BookIcon className="w-8 h-8 animate-bounce" />
-                    3
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-sm text-gray-400 ">
-                  <div>Streak</div>
-                  <div>Entries</div>
-                  <div>Journals</div>
-                </div>
-                <div className="flex items-center justify-between mt-4 rounded-md">
-                  <div className="text-2xl font-bold text-white">4</div>
-                  <div className="text-2xl font-bold text-white">2</div>
-                  <div className="text-2xl font-bold text-white">5</div>
-                </div>
-                <div className="flex items-center justify-between text-sm text-gray-400">
-                  <div>Total Hours</div>
-                  <div>Current Streak</div>
-                  <div>Longest Streak</div>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <Button variant="outline" className="bg-orange-500 text-white hover:bg-orange-600">
-                    <RefreshCwIcon className="w-5 h-5" />
-                    Refresh
-                  </Button>
-                  <Button variant="outline" className="bg-orange-500 text-white hover:bg-orange-600">
-                    <FilePenIcon className="w-5 h-5" />
-                    Edit
-                  </Button>
-                  <Button variant="outline" className="bg-orange-500 text-white hover:bg-orange-600">
-                    <ShareIcon className="w-5 h-5" />
-                    Share
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800 shadow-md">
-              <CardHeader>
-                <CardTitle className="text-white">Quotes</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <p className="text-gray-400">
-                    We cannot solve problems with the kind of thinking we employed when we came up with them.
-                  </p>
-                  <Button variant="outline" className="ml-4 bg-orange-500 text-white hover:bg-orange-600">
-                    <RefreshCwIcon className="w-5 h-5" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-white">
+                <BookIcon className="w-6 h-6 mr-2 inline-block" />
+                Books
+              </h3>
+              <Button variant="ghost" className="text-gray-400 hover:text-gray-200">
+                <PlusIcon className="w-6 h-6" />
+              </Button>
+            </div>
+            <p className="text-gray-400 mt-4">Explore your vast collection of books.</p>
+            <Button variant="outline" className="mt-4">
+              Browse Books
+            </Button>
+          </div>
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-white">
+                <FilmIcon className="w-6 h-6 mr-2 inline-block" />
+                Movies
+              </h3>
+              <Button variant="ghost" className="text-gray-400 hover:text-gray-200">
+                <PlusIcon className="w-6 h-6" />
+              </Button>
+            </div>
+            <p className="text-gray-400 mt-4">Discover your curated movie collection.</p>
+            <Button variant="outline" className="mt-4">
+              Browse Movies
+            </Button>
+          </div>
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-white">
+                <Music2Icon className="w-6 h-6 mr-2 inline-block" />
+                Music
+              </h3>
+              <Button variant="ghost" className="text-gray-400 hover:text-gray-200">
+                <PlusIcon className="w-6 h-6" />
+              </Button>
+            </div>
+            <p className="text-gray-400 mt-4">Explore your diverse music collection.</p>
+            <Button variant="outline" className="mt-4">
+              Browse Music
+            </Button>
+          </div>
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-white">
+                <NewspaperIcon className="w-6 h-6 mr-2 inline-block" />
+                Magazines
+              </h3>
+              <Button variant="ghost" className="text-gray-400 hover:text-gray-200">
+                <PlusIcon className="w-6 h-6" />
+              </Button>
+            </div>
+            <p className="text-gray-400 mt-4">Discover your selection of magazines.</p>
+            <Button variant="outline" className="mt-4">
+              Browse Magazines
+            </Button>
           </div>
         </main>
       </div>
@@ -169,3 +184,4 @@ export default function Component() {
     </div>
   )
 }
+
