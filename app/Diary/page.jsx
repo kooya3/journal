@@ -21,17 +21,18 @@ export default function Component() {
     e.preventDefault();
     if (!formValid) return;
 
+    let updatedEntries;
     if (editingEntry !== null) {
-      const updatedEntries = entries.map((entry, index) =>
+      updatedEntries = entries.map((entry, index) =>
         index === editingEntry ? entryData : entry
       );
-      setEntries(updatedEntries);
       setEditingEntry(null);
     } else {
-      setEntries([...entries, entryData]);
+      updatedEntries = [...entries, entryData];
     }
 
-    localStorage.setItem("entries", JSON.stringify(entries));
+    setEntries(updatedEntries);
+    localStorage.setItem("entries", JSON.stringify(updatedEntries));
     setEntryData({ title: "", content: "" });
     setFormValid(false);
   };
@@ -45,6 +46,18 @@ export default function Component() {
     const updatedEntries = entries.filter((_, i) => i !== index);
     setEntries(updatedEntries);
     localStorage.setItem("entries", JSON.stringify(updatedEntries));
+  };
+
+  const handleDownload = () => {
+    const json = JSON.stringify(entries, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "entries.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   useEffect(() => {
@@ -96,7 +109,7 @@ export default function Component() {
                   Calendar
                 </Button>
               </Link>
-              <Link href="/Librari" className="block" prefetch={false}>
+              <Link href="/Library" className="block" prefetch={false}>
                 <Button variant="outline" className="w-full hover:bg-gray-700 transition-colors">
                   <LibraryIcon className="w-5 h-5 mr-2" />
                   Library
@@ -106,15 +119,16 @@ export default function Component() {
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Journals</h2>
               <div className="space-y-1">
-              <Link href="/Diary" className="block" prefetch={false}><Button variant="ghost" className="w-full text-left hover:bg-gray-700 transition-colors">
+              <Link href="#" className="block" prefetch={false}><Button variant="ghost" className="w-full text-left hover:bg-gray-700 transition-colors">
                   <Avatar className="inline-block w-6 h-6 mr-2">
                     <AvatarImage src="/placeholder-user.jpg" />
                     <AvatarFallback>MJ</AvatarFallback>
                   </Avatar>
                   My Journal
-                </Button></Link>
-                
-                <Link href="/Journal" className="block" prefetch={false}>
+                </Button>
+                </Link>
+              
+                <Link href="#" className="block" prefetch={false}>
                   <Button variant="outline" className="w-full hover:bg-gray-700 transition-colors">
                     Add Journal
                   </Button>
@@ -177,15 +191,17 @@ export default function Component() {
                     </Button>
                   </div>
                 </div>
-                <p className="text-gray-300">{entry.content}</p>
+                <p>{entry.content}</p>
               </div>
             ))}
           </div>
+          <div className="mt-8">
+            <Button onClick={handleDownload} variant="outline" className="hover:bg-gray-700 transition-colors">
+              Download Entries as JSON
+            </Button>
+          </div>
         </main>
       </div>
-      <footer className="h-16 flex items-center justify-center bg-gray-800 shadow-md">
-        <p>&copy; 2024 My Journal App</p>
-      </footer>
     </div>
   );
 }
