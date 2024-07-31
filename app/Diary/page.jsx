@@ -109,7 +109,7 @@ export default function Component() {
                   Calendar
                 </Button>
               </Link>
-              <Link href="/Library" className="block" prefetch={false}>
+              <Link href="/Librari" className="block" prefetch={false}>
                 <Button variant="outline" className="w-full hover:bg-gray-700 transition-colors">
                   <LibraryIcon className="w-5 h-5 mr-2" />
                   Library
@@ -119,7 +119,7 @@ export default function Component() {
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Journals</h2>
               <div className="space-y-1">
-              <Link href="#" className="block" prefetch={false}><Button variant="ghost" className="w-full text-left hover:bg-gray-700 transition-colors">
+              <Link href="/Diary" className="block" prefetch={false}><Button variant="ghost" className="w-full text-left hover:bg-gray-700 transition-colors">
                   <Avatar className="inline-block w-6 h-6 mr-2">
                     <AvatarImage src="/placeholder-user.jpg" />
                     <AvatarFallback>MJ</AvatarFallback>
@@ -127,8 +127,7 @@ export default function Component() {
                   My Journal
                 </Button>
                 </Link>
-              
-                <Link href="#" className="block" prefetch={false}>
+                <Link href="/Diary" className="block" prefetch={false}>
                   <Button variant="outline" className="w-full hover:bg-gray-700 transition-colors">
                     Add Journal
                   </Button>
@@ -196,7 +195,7 @@ export default function Component() {
             ))}
           </div>
           <div className="mt-8">
-            <Button onClick={handleDownload} variant="outline" className="hover:bg-gray-700 transition-colors">
+            <Button onClick={handleDownload} variant="outline" className="hover:bg-orange-700 transition-colors">
               Download Entries as JSON
             </Button>
           </div>

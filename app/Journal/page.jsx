@@ -155,8 +155,8 @@ export default function Component() {
                 <div key={entry.id} className="p-4 mb-4 bg-gray-700 rounded-lg flex justify-between items-center">
                   <p className="text-white">{entry.text}</p>
                   <div className="space-x-2 flex  gap-1 items-center">
-                    <Button variant="outline" onClick={() => handleEdit(entry)}>Edit</Button>
-                    <Button variant="outline" onClick={() => handleDelete(entry.id)}>Delete</Button>
+                    <Button className="hover:bg-gray-600 transition-colors focus:bg-orange-500 focus:text-white" variant="outline" onClick={() => handleEdit(entry)}>Edit</Button>
+                    <Button className="hover:bg-gray-600 transition-colors focus:bg-orange-500 focus:text-white" variant="outline" onClick={() => handleDelete(entry.id)}>Delete</Button>
                   </div>
                 </div>
               ))}
