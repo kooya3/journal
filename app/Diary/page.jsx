@@ -96,7 +96,7 @@ export default function Component() {
                   Calendar
                 </Button>
               </Link>
-              <Link href="/Library" className="block" prefetch={false}>
+              <Link href="/Librari" className="block" prefetch={false}>
                 <Button variant="outline" className="w-full hover:bg-gray-700 transition-colors">
                   <LibraryIcon className="w-5 h-5 mr-2" />
                   Library
